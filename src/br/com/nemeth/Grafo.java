@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public abstract class Grafo {
-    Integer numVertices;
-    Integer numArestas;
+     Integer numVertices;
+     Integer numArestas;
     
     boolean isDirecionado;
     boolean isPonderado;
@@ -16,6 +16,7 @@ public abstract class Grafo {
     public List<String> vertices;
     
     public Grafo(boolean isDir, boolean isPond) {
+    	
         this.isDirecionado = isDir;
         this.isPonderado = isPond;
     }
@@ -29,18 +30,18 @@ public abstract class Grafo {
         }
     }
     
-    abstract boolean inserirVertice();
-    abstract boolean inserirVertice(String label);
-    abstract boolean removerVertice(String label);
-    abstract boolean removerVertice(Integer indice);
-    abstract boolean inserirAresta(Integer origem, Integer destino);
-    abstract boolean inserirAresta(Integer origem, Integer destino, Integer peso);
-    abstract boolean removerAresta(Integer origem, Integer destino);
-    abstract Integer indiceVertice(String label);
-    abstract String labelVertice(Integer indice);
-    abstract boolean existeAresta(Integer origem, Integer destino);
-    abstract List<Integer> retornarVizinhos(Integer vertice);
-    abstract void imprimeGrafo();
+    public abstract boolean inserirVertice();
+    public abstract boolean inserirVertice(String label);
+    public abstract boolean removerVertice(String label);
+    public abstract boolean removerVertice(Integer indice);
+    public abstract boolean inserirAresta(Integer origem, Integer destino);
+    public abstract boolean inserirAresta(Integer origem, Integer destino, Integer peso);
+    public abstract boolean removerAresta(Integer origem, Integer destino);
+    public abstract Integer indiceVertice(String label);
+    public abstract String labelVertice(Integer indice);
+    public abstract boolean existeAresta(Integer origem, Integer destino);
+    public abstract List<Integer> retornarVizinhos(Integer vertice);
+    public abstract void imprimeGrafo();
     
     void carregarGrafo(String nomeArquivo) throws FileNotFoundException {
         File arquivo = new File(nomeArquivo);
