@@ -94,7 +94,16 @@ public class GrafoLista extends Grafo {
 	public boolean existeAresta(Integer origem, Integer destino) {
 		// retorna verdadeiro caso exista uma aresta entre os vertices passados por
 		// parametro
-		throw new UnsupportedOperationException("Not supported yet.");
+
+		for (int i = 0; i < arestas.get(origem).size(); i++) {
+			if (arestas.get(origem).get(i).destino == destino) {
+				System.out.println("existe");
+				return true;
+				
+			}
+		}
+		System.out.println("não existe");
+		return false;
 	}
 
 	@Override
