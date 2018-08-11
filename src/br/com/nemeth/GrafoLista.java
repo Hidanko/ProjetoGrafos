@@ -8,7 +8,7 @@ public class GrafoLista extends Grafo {
 	List<List<Aresta>> arestas = new ArrayList<List<Aresta>>();
 
 	public GrafoLista(boolean isDir, boolean isPond) {
-		
+
 		super(isDir, isPond);
 		vertices = new Vector<String>();
 		numVertices = 0;
@@ -26,10 +26,9 @@ public class GrafoLista extends Grafo {
 	@Override
 	public boolean inserirVertice() {
 		// insere um vertice com o nome igual ao indice
-		
-		
+
 		arestas.add(new Vector<Aresta>());
-		vertices.add(null);
+	//	vertices.add();
 		numVertices++;
 		return true;
 	}
@@ -58,16 +57,19 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public boolean inserirAresta(Integer origem, Integer destino) {
-		// insere uma aresta entre dois vertices passados por parametro
-		// caso o grafo for direcionado, adiciona um arco
-		throw new UnsupportedOperationException("Not supported yet.");
+		return inserirAresta(origem, destino, 1);
 	}
 
 	@Override
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
-		// insere uma aresta entre dois vertices passados por parametro
-		// caso o grafo for direcionado, adiciona um arco
-		throw new UnsupportedOperationException("Not supported yet.");
+
+		arestas.get(origem).add(new Aresta(destino, peso));
+
+		if (!isDirecionado) {
+			arestas.get(destino).add(new Aresta(origem, peso));
+		}
+		return true;
+
 	}
 
 	@Override
@@ -84,8 +86,8 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public String labelVertice(Integer indice) {
-		// retorna o nome do vertice pelo indice passado por parametro
-		throw new UnsupportedOperationException("Not supported yet.");
+		return vertices.get(indice);
+
 	}
 
 	@Override
@@ -107,9 +109,9 @@ public class GrafoLista extends Grafo {
 
 		for (int i = 0; i < numVertices; i++) {
 			System.out.print(vertices.get(i) + " ->\t");
-			
-			for (int j = 0; j < arestas.size() ; j++) {
-				System.out.println(arestas.get(i).get(j).destino);
+
+			for (int j = 0; j < arestas.get(i).size(); j++) {
+				 System.out.print(labelVertice(arestas.get(i).get(j).destino)+", ");
 			}
 			System.out.println("");
 		}

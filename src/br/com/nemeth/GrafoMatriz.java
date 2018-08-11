@@ -9,7 +9,7 @@ public class GrafoMatriz extends Grafo {
 	public List<List<Integer>> arestas = new ArrayList<List<Integer>>();
 
 	public GrafoMatriz(boolean isDir, boolean isPond) {
-		super(isPond, isDir);
+		super(isDir, isPond);
 		vertices = new Vector<String>();
 		numVertices = 0;
 		numArestas = 0;
@@ -99,9 +99,8 @@ public class GrafoMatriz extends Grafo {
 
 	@Override
 	public String labelVertice(Integer indice) {
-		// retorna o nome do vertice pelo indice passado por parametro
 
-		return "";
+		return vertices.get(indice);
 	}
 
 	@Override
