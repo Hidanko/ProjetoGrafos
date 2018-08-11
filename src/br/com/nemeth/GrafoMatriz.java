@@ -107,7 +107,10 @@ public class GrafoMatriz extends Grafo {
 	public boolean existeAresta(Integer origem, Integer destino) {
 		// retorna verdadeiro caso exista uma aresta entre os vertices passados por
 		// parametro
-		throw new UnsupportedOperationException("Not supported yet.");
+
+		System.out.println( (arestas.get(origem).get(destino) != 0));
+		return (arestas.get(origem).get(destino) != 0);
+
 	}
 
 	@Override
