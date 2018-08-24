@@ -37,6 +37,12 @@ public class GrafoMatriz extends Grafo {
 	public boolean inserirVertice(String label) {
 		// insere um vertice com o nome passado por parametro
 		vertices.add(label);
+		if (numVertices == null) {
+			numVertices = 0;
+		}
+		if (arestas == null) {
+			arestas = new ArrayList<List<Integer>>();
+		}
 		numVertices++;
 
 		List<Integer> lista = new Vector<Integer>();
@@ -76,10 +82,10 @@ public class GrafoMatriz extends Grafo {
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
 		// insere uma aresta entre dois vertices passados por parametro
 		// caso o grafo for direcionado, adiciona um arco
-		arestas.get(origem).set(destino, peso);
+		arestas.get(origem-1).set(destino-1, peso);
 
 		if (!isDirecionado) {
-			arestas.get(destino).set(origem, peso);
+			arestas.get(destino-1).set(origem-1, peso);
 		}
 		return true;
 
@@ -115,8 +121,15 @@ public class GrafoMatriz extends Grafo {
 
 	@Override
 	public List<Integer> retornarVizinhos(Integer vertice) {
-		// retorna os indices dos vertices vizinhos ao vertice passado por parametro
-		throw new UnsupportedOperationException("Not supported yet.");
+		List<Integer> vizinhos = new Vector<Integer>();
+
+		for (int i = 0; i < numVertices; i++) {
+			if(existeAresta(vertice, i)) {
+				vizinhos.add(i);
+			}
+		}
+
+		return vizinhos;
 	}
 
 	@Override

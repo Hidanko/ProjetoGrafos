@@ -28,7 +28,7 @@ public class GrafoLista extends Grafo {
 		// insere um vertice com o nome igual ao indice
 
 		arestas.add(new Vector<Aresta>());
-	//	vertices.add();
+		// vertices.add();
 		numVertices++;
 		return true;
 	}
@@ -99,7 +99,7 @@ public class GrafoLista extends Grafo {
 			if (arestas.get(origem).get(i).destino == destino) {
 				System.out.println("existe");
 				return true;
-				
+
 			}
 		}
 		System.out.println("não existe");
@@ -108,8 +108,13 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public List<Integer> retornarVizinhos(Integer vertice) {
-		// retorna os indices dos vertices vizinhos ao vertice passado por parametro
-		throw new UnsupportedOperationException("Not supported yet.");
+		List<Integer> vizinhos = new Vector<Integer>();
+
+		for (int i = 0; i < arestas.get(vertice).size(); i++) {
+			vizinhos.add(arestas.get(vertice).get(i).destino);
+		}
+
+		return vizinhos;
 	}
 
 	@Override
@@ -120,7 +125,7 @@ public class GrafoLista extends Grafo {
 			System.out.print(vertices.get(i) + " ->\t");
 
 			for (int j = 0; j < arestas.get(i).size(); j++) {
-				 System.out.print(labelVertice(arestas.get(i).get(j).destino)+", ");
+				System.out.print(labelVertice(arestas.get(i).get(j).destino) + ", ");
 			}
 			System.out.println("");
 		}
