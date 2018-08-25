@@ -10,14 +10,12 @@ public class GrafoLista extends Grafo {
 	public GrafoLista(boolean isDir, boolean isPond) {
 
 		super(isDir, isPond);
-		vertices = new Vector<String>();
 		numVertices = 0;
 		numArestas = 0;
 	}
 
 	public GrafoLista(String nomeArquivo) {
 		super(nomeArquivo);
-		vertices = new Vector<String>();
 		numVertices = 0;
 		numArestas = 0;
 

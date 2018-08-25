@@ -7,10 +7,10 @@ import java.util.Vector;
 public class GrafoMatriz extends Grafo {
 
 	public List<List<Integer>> arestas = new ArrayList<List<Integer>>();
-
+	
 	public GrafoMatriz(boolean isDir, boolean isPond) {
 		super(isDir, isPond);
-		vertices = new Vector<String>();
+
 		numVertices = 0;
 		numArestas = 0;
 
@@ -18,7 +18,7 @@ public class GrafoMatriz extends Grafo {
 
 	public GrafoMatriz(String nomeArquivo) {
 		super(nomeArquivo);
-		vertices = new Vector<String>();
+		arestas = new ArrayList<List<Integer>>();
 		numVertices = 0;
 		numArestas = 0;
 
@@ -37,12 +37,7 @@ public class GrafoMatriz extends Grafo {
 	public boolean inserirVertice(String label) {
 		// insere um vertice com o nome passado por parametro
 		vertices.add(label);
-		if (numVertices == null) {
-			numVertices = 0;
-		}
-		if (arestas == null) {
-			arestas = new ArrayList<List<Integer>>();
-		}
+
 		numVertices++;
 
 		List<Integer> lista = new Vector<Integer>();
@@ -54,7 +49,9 @@ public class GrafoMatriz extends Grafo {
 		for (int i = 0; i < numVertices - 1; i++) {
 			arestas.get(i).add(0);
 		}
-
+		if (arestas == null) {
+			arestas = new ArrayList<List<Integer>>();
+		}
 		arestas.add(lista);
 		return true;
 
@@ -136,6 +133,7 @@ public class GrafoMatriz extends Grafo {
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
 		System.out.print("*\t");
+		System.out.println(numVertices);
 		for (int i = 0; i < numVertices; i++) {
 			System.out.print(vertices.get(i) + "\t");
 		}

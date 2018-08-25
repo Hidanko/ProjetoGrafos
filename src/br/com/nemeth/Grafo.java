@@ -30,10 +30,13 @@ public abstract class Grafo {
 	}
 
 	public Grafo(String nomeArquivo) {
-		vertices = new ArrayList<String>();
+		numVertices = 0;
+		numArestas = 0;
+		vertices = new Vector<String>();
 		try {
 			this.carregarGrafo(nomeArquivo);
 		} catch (Exception ex) {
+			System.out.println("aqui");
 			ex.printStackTrace();
 		}
 	}
@@ -63,6 +66,7 @@ public abstract class Grafo {
 	public abstract void imprimeGrafo();
 
 	void carregarGrafo(String nomeArquivo) throws IOException {
+		
 		BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
 
 		String[] inteiros = br.readLine().split(" ");

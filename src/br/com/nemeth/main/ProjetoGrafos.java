@@ -3,6 +3,7 @@ package br.com.nemeth.main;
 import java.io.File;
 
 import br.com.nemeth.Grafo;
+import br.com.nemeth.GrafoLista;
 import br.com.nemeth.GrafoMatriz;
 
 public class ProjetoGrafos {
@@ -10,7 +11,7 @@ public class ProjetoGrafos {
 	public static void main(String[] args) {
 		Grafo grafo = null;
 		try {
-			grafo = new GrafoMatriz(new File("GrafoStar2.txt").getAbsolutePath());
+			grafo = new GrafoLista(new File("GrafoStar2.txt").getAbsolutePath());
 		} catch (NullPointerException e) {
 			System.out.println("Null");
 		}
@@ -29,6 +30,7 @@ public class ProjetoGrafos {
 		//
 		// grafo.existeAresta(0, 1);
 		System.out.println("a");
+		System.out.println(grafo.vertices.size());
 		grafo.imprimeGrafo();
 
 	}
