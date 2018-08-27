@@ -5,19 +5,18 @@ import java.util.List;
 import java.util.Vector;
 
 public class GrafoLista extends Grafo {
-	List<List<Aresta>> arestas = new ArrayList<List<Aresta>>();
+	List<List<Aresta>> arestas;
 
 	public GrafoLista(boolean isDir, boolean isPond) {
 
 		super(isDir, isPond);
-		numVertices = 0;
-		numArestas = 0;
+		vertices = new Vector<String>();
+		numVertices=0;
+		numArestas=0;
 	}
 
 	public GrafoLista(String nomeArquivo) {
 		super(nomeArquivo);
-		numVertices = 0;
-		numArestas = 0;
 
 	}
 
@@ -25,14 +24,14 @@ public class GrafoLista extends Grafo {
 	public boolean inserirVertice() {
 		// insere um vertice com o nome igual ao indice
 
-		arestas.add(new Vector<Aresta>());
-		// vertices.add();
+		vertices.add("");
 		numVertices++;
 		return true;
 	}
 
 	@Override
 	public boolean inserirVertice(String label) {
+
 		// insere um vertice com o nome passado por parametro
 		vertices.add(label);
 		arestas.add(new Vector<Aresta>());
@@ -61,13 +60,17 @@ public class GrafoLista extends Grafo {
 	@Override
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
 
-		arestas.get(origem).add(new Aresta(destino, peso));
+		Aresta novaAresta = new Aresta(destino, peso);
 
-		if (!isDirecionado) {
-			arestas.get(destino).add(new Aresta(origem, peso));
+
+		arestas.get(origem).add(novaAresta);
+
+		if (isDirecionado == false) {
+			novaAresta.destino = origem;
+			arestas.get(destino).add(novaAresta);
 		}
-		return true;
 
+		return true;
 	}
 
 	@Override
@@ -118,14 +121,24 @@ public class GrafoLista extends Grafo {
 	@Override
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
-
-		for (int i = 0; i < numVertices; i++) {
+		System.out.println("NUmero vertices - imprimeGrafo: "+numVertices);
+		for (int i = 0; i < numArestas; i++) {
 			System.out.print(vertices.get(i) + " ->\t");
 
-			for (int j = 0; j < arestas.get(i).size(); j++) {
+			for (int j = 0; j < arestas.get(i).size()-1; j++) {
 				System.out.print(labelVertice(arestas.get(i).get(j).destino) + ", ");
 			}
 			System.out.println("");
 		}
+	}
+
+	@Override
+	public boolean preencherVertices(int nVertices) {
+		arestas  = new ArrayList<List<Aresta>>();
+		
+		for (int i = 0; i <nVertices; i++) {
+			arestas.add(new Vector<Aresta>());
+		}
+		return false;
 	}
 }

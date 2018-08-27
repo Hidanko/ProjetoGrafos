@@ -1,13 +1,7 @@
 package br.com.nemeth;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,6 +21,7 @@ public abstract class Grafo {
 
 		this.isDirecionado = isDir;
 		this.isPonderado = isPond;
+		preencherVertices(0);
 	}
 
 	public Grafo(String nomeArquivo) {
@@ -63,42 +58,42 @@ public abstract class Grafo {
 
 	public abstract List<Integer> retornarVizinhos(Integer vertice);
 
+	public abstract boolean preencherVertices(int nVertices);
 	public abstract void imprimeGrafo();
 
 	void carregarGrafo(String nomeArquivo) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
+	      File arquivo = new File(nomeArquivo);
+	        Scanner scanner = new Scanner(arquivo);
+	        
+	        Integer nVertices = scanner.nextInt();
+	        Integer nArestas = scanner.nextInt();                
+	        
+	        Integer isDir = scanner.nextInt();
+	        Integer isPond = scanner.nextInt();
+	        
+	        this.isDirecionado = isDir == 1;
+	        this.isPonderado = isPond == 1;
+	        preencherVertices(nVertices);
 
-		String[] inteiros = br.readLine().split(" ");
-		
-		Integer nVertices = new Integer(inteiros[0]);
-		Integer nArestas = new Integer(inteiros[1]);
-
-		Integer isDir = new Integer(inteiros[2]);
-		Integer isPond = new Integer(inteiros[3]);
-
-		this.isDirecionado = isDir == 1;
-		this.isPonderado = isPond == 1;
-
-		
-		String linha;
-		for (int i = 0; i < nVertices; i++) {
-				linha = br.readLine();
-				this.inserirVertice(linha);
-		}
-
-		for (int i = 0; i < nArestas; i++) {
-			String[] inteiros2 = br.readLine().split(" ");
-			Integer origem = new Integer(inteiros[0]);
-			Integer destino = new Integer(inteiros[1]);
-			if (isPond == 1) {
-				Integer peso = new Integer(br.readLine());
-				this.inserirAresta(origem, destino, peso);
-			} else {
-				this.inserirAresta(origem, destino);
-			}
-		}
-		br.close();
+	        for (int i = 0; i < nVertices; i++) {
+	            if(scanner.hasNext()) {
+	                String linha = scanner.next();
+	                this.inserirVertice(linha);
+	            }
+	        }
+	        System.out.println("nVertices:"+nVertices);
+	        System.out.println("nArestas: "+nArestas);
+	        for (int i = 0; i < nArestas; i++) {
+	            Integer origem = scanner.nextInt();
+	            Integer destino = scanner.nextInt();
+	            if(isPond == 1) {
+	                Integer peso = scanner.nextInt();
+	                this.inserirAresta(origem, destino, peso);
+	            } else {
+	                this.inserirAresta(origem, destino);
+	            }
+	        }
+	        scanner.close();
 	}
 
 	List<Integer> buscaProfundidade(int verticeInicial, int verticeFinal) {

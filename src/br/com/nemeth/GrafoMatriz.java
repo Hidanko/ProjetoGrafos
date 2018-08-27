@@ -6,21 +6,16 @@ import java.util.Vector;
 
 public class GrafoMatriz extends Grafo {
 
-	public List<List<Integer>> arestas = new ArrayList<List<Integer>>();
+	public List<List<Integer>> arestas;
 	
 	public GrafoMatriz(boolean isDir, boolean isPond) {
 		super(isDir, isPond);
 
-		numVertices = 0;
-		numArestas = 0;
 
 	}
 
 	public GrafoMatriz(String nomeArquivo) {
 		super(nomeArquivo);
-		arestas = new ArrayList<List<Integer>>();
-		numVertices = 0;
-		numArestas = 0;
 
 	}
 
@@ -79,10 +74,10 @@ public class GrafoMatriz extends Grafo {
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
 		// insere uma aresta entre dois vertices passados por parametro
 		// caso o grafo for direcionado, adiciona um arco
-		arestas.get(origem-1).set(destino-1, peso);
+		arestas.get(origem).set(destino, peso);
 
 		if (!isDirecionado) {
-			arestas.get(destino-1).set(origem-1, peso);
+			arestas.get(destino).set(origem, peso);
 		}
 		return true;
 
@@ -147,6 +142,21 @@ public class GrafoMatriz extends Grafo {
 			System.out.println("");
 		}
 
+	}
+
+	@Override
+	public boolean preencherVertices(int nVertices) {
+		arestas = new ArrayList<List<Integer>>();
+		
+		for (int i = 0; i < nVertices; i++) {
+			List<Integer> lista = new Vector<Integer>();
+			for (int j = 0; j < nVertices; j++) {
+				lista.add(0);
+			}
+			arestas.add(lista);
+		}
+		
+		return false;
 	}
 
 }
