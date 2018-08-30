@@ -66,8 +66,8 @@ public class GrafoLista extends Grafo {
 		arestas.get(origem).add(novaAresta);
 
 		if (isDirecionado == false) {
-			novaAresta.destino = origem;
-			arestas.get(destino).add(novaAresta);
+			Aresta novaAresta2 = new Aresta(origem, peso);
+			arestas.get(destino).add(novaAresta2);
 		}
 
 		return true;
@@ -122,7 +122,7 @@ public class GrafoLista extends Grafo {
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
 		System.out.println("NUmero vertices - imprimeGrafo: "+numVertices);
-		for (int i = 0; i < numArestas; i++) {
+		for (int i = 0; i < vertices.size(); i++) {
 			System.out.print(vertices.get(i) + " ->\t");
 
 			for (int j = 0; j < arestas.get(i).size()-1; j++) {

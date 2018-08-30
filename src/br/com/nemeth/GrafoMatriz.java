@@ -127,8 +127,7 @@ public class GrafoMatriz extends Grafo {
 	@Override
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
-		System.out.print("*\t");
-		System.out.println(numVertices);
+		System.out.print("\n*\t");
 		for (int i = 0; i < numVertices; i++) {
 			System.out.print(vertices.get(i) + "\t");
 		}
