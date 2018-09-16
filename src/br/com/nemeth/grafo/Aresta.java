@@ -1,4 +1,4 @@
-package br.com.nemeth;
+package br.com.nemeth.grafo;
 
 public class Aresta {
     int destino;

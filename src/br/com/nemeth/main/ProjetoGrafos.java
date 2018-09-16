@@ -2,9 +2,10 @@ package br.com.nemeth.main;
 
 import java.io.File;
 
-import br.com.nemeth.Grafo;
-import br.com.nemeth.GrafoLista;
-import br.com.nemeth.GrafoMatriz;
+import br.com.nemeth.algoritmos.Dijkstra;
+import br.com.nemeth.grafo.Grafo;
+import br.com.nemeth.impl.GrafoLista;
+import br.com.nemeth.impl.GrafoMatriz;
 
 public class ProjetoGrafos {
 
@@ -32,6 +33,7 @@ public class ProjetoGrafos {
 		System.out.println("Numero vertices:" +grafo.vertices.size());
 		grafo.imprimeGrafo();
 
+		Dijkstra.execute(grafo, 0);
 	}
 
 }

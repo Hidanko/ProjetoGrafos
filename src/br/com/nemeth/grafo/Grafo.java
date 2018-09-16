@@ -1,4 +1,4 @@
-package br.com.nemeth;
+package br.com.nemeth.grafo;
 
 import java.io.File;
 import java.io.IOException;

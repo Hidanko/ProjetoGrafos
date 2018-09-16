@@ -1,21 +1,22 @@
-package br.com.nemeth;
+package br.com.nemeth.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class GrafoLista extends Grafo {
-	List<List<Aresta>> arestas;
+import br.com.nemeth.grafo.Grafo;
 
-	public GrafoLista(boolean isDir, boolean isPond) {
+public class GrafoMatriz extends Grafo {
 
+	public List<List<Integer>> arestas;
+	
+	public GrafoMatriz(boolean isDir, boolean isPond) {
 		super(isDir, isPond);
-		vertices = new Vector<String>();
-		numVertices=0;
-		numArestas=0;
+
+
 	}
 
-	public GrafoLista(String nomeArquivo) {
+	public GrafoMatriz(String nomeArquivo) {
 		super(nomeArquivo);
 
 	}
@@ -23,20 +24,34 @@ public class GrafoLista extends Grafo {
 	@Override
 	public boolean inserirVertice() {
 		// insere um vertice com o nome igual ao indice
-
-		vertices.add("");
-		numVertices++;
+		List<Integer> lista = new Vector<Integer>();
+		arestas.add(lista);
 		return true;
+
 	}
 
 	@Override
 	public boolean inserirVertice(String label) {
-
 		// insere um vertice com o nome passado por parametro
 		vertices.add(label);
-		arestas.add(new Vector<Aresta>());
+
 		numVertices++;
+
+		List<Integer> lista = new Vector<Integer>();
+
+		for (int i = 0; i < numVertices; i++) {
+			lista.add(i, 0);
+		}
+
+		for (int i = 0; i < numVertices - 1; i++) {
+			arestas.get(i).add(0);
+		}
+		if (arestas == null) {
+			arestas = new ArrayList<List<Integer>>();
+		}
+		arestas.add(lista);
 		return true;
+
 	}
 
 	@Override
@@ -59,18 +74,15 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
+		// insere uma aresta entre dois vertices passados por parametro
+		// caso o grafo for direcionado, adiciona um arco
+		arestas.get(origem).set(destino, peso);
 
-		Aresta novaAresta = new Aresta(destino, peso);
-
-
-		arestas.get(origem).add(novaAresta);
-
-		if (isDirecionado == false) {
-			Aresta novaAresta2 = new Aresta(origem, peso);
-			arestas.get(destino).add(novaAresta2);
+		if (!isDirecionado) {
+			arestas.get(destino).set(origem, peso);
 		}
-
 		return true;
+
 	}
 
 	@Override
@@ -87,8 +99,8 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public String labelVertice(Integer indice) {
-		return vertices.get(indice);
 
+		return vertices.get(indice);
 	}
 
 	@Override
@@ -96,23 +108,19 @@ public class GrafoLista extends Grafo {
 		// retorna verdadeiro caso exista uma aresta entre os vertices passados por
 		// parametro
 
-		for (int i = 0; i < arestas.get(origem).size(); i++) {
-			if (arestas.get(origem).get(i).destino == destino) {
-				System.out.println("existe");
-				return true;
+		System.out.println( (arestas.get(origem).get(destino) != 0));
+		return (arestas.get(origem).get(destino) != 0);
 
-			}
-		}
-		System.out.println("não existe");
-		return false;
 	}
 
 	@Override
 	public List<Integer> retornarVizinhos(Integer vertice) {
 		List<Integer> vizinhos = new Vector<Integer>();
 
-		for (int i = 0; i < arestas.get(vertice).size(); i++) {
-			vizinhos.add(arestas.get(vertice).get(i).destino);
+		for (int i = 0; i < numVertices; i++) {
+			if(existeAresta(vertice, i)) {
+				vizinhos.add(i);
+			}
 		}
 
 		return vizinhos;
@@ -121,24 +129,35 @@ public class GrafoLista extends Grafo {
 	@Override
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
-		System.out.println("NUmero vertices - imprimeGrafo: "+numVertices);
-		for (int i = 0; i < vertices.size(); i++) {
-			System.out.print(vertices.get(i) + " ->\t");
+		System.out.print("\n*\t");
+		for (int i = 0; i < numVertices; i++) {
+			System.out.print(vertices.get(i) + "\t");
+		}
+		System.out.println("");
+		for (int i = 0; i < numVertices; i++) {
+			System.out.print(vertices.get(i) + "\t");
+			for (int j = 0; j < numVertices; j++) {
 
-			for (int j = 0; j < arestas.get(i).size()-1; j++) {
-				System.out.print(labelVertice(arestas.get(i).get(j).destino) + ", ");
+				System.out.print(arestas.get(i).get(j) + "\t");
 			}
 			System.out.println("");
 		}
+
 	}
 
 	@Override
 	public boolean preencherVertices(int nVertices) {
-		arestas  = new ArrayList<List<Aresta>>();
+		arestas = new ArrayList<List<Integer>>();
 		
-		for (int i = 0; i <nVertices; i++) {
-			arestas.add(new Vector<Aresta>());
+		for (int i = 0; i < nVertices; i++) {
+			List<Integer> lista = new Vector<Integer>();
+			for (int j = 0; j < nVertices; j++) {
+				lista.add(0);
+			}
+			arestas.add(lista);
 		}
+		
 		return false;
 	}
+
 }
