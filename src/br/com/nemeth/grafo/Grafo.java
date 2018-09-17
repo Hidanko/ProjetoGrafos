@@ -9,11 +9,11 @@ import java.util.Stack;
 import java.util.Vector;
 
 public abstract class Grafo {
-	Integer numVertices;
-	Integer numArestas;
+	protected Integer numVertices;
+	protected Integer numArestas;
 
-	boolean isDirecionado;
-	boolean isPonderado;
+	protected boolean isDirecionado;
+	protected boolean isPonderado;
 
 	public List<String> vertices;
 

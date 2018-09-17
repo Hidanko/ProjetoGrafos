@@ -1,7 +1,7 @@
 package br.com.nemeth.grafo;
 
 public class Aresta {
-    int destino;
+    public int destino;
     int peso;
     
     public Aresta(int destino, int peso) {
