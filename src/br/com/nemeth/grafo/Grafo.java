@@ -162,4 +162,14 @@ public abstract class Grafo {
 
 		return saida;
 	}
+
+	public List<String> getVertices() {
+		return vertices;
+	}
+
+	public void setVertices(List<String> vertices) {
+		this.vertices = vertices;
+	}
+	
+	
 }

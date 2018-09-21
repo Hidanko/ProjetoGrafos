@@ -4,7 +4,6 @@ import java.io.File;
 
 import br.com.nemeth.algoritmos.Dijkstra;
 import br.com.nemeth.grafo.Grafo;
-import br.com.nemeth.impl.GrafoLista;
 import br.com.nemeth.impl.GrafoMatriz;
 
 public class ProjetoGrafos {
@@ -12,7 +11,7 @@ public class ProjetoGrafos {
 	public static void main(String[] args) {
 		Grafo grafo = null;
 		try {
-			grafo = new GrafoMatriz(new File("Dijkstra2.txt").getAbsolutePath());
+			grafo = new GrafoMatriz(new File("Dijkstra1.txt").getAbsolutePath());
 		} catch (NullPointerException e) {
 			System.out.println("Null");
 		}
@@ -33,7 +32,7 @@ public class ProjetoGrafos {
 		System.out.println("Numero vertices:" +grafo.vertices.size());
 		grafo.imprimeGrafo();
 
-		Dijkstra.execute(grafo, 0);
+		Dijkstra.execute((GrafoMatriz) grafo, 0);
 	}
 
 }

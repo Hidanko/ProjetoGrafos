@@ -3,10 +3,7 @@ package br.com.nemeth.algoritmos;
 import java.util.List;
 import java.util.Vector;
 
-import javax.sound.midi.Soundbank;
-
-import br.com.nemeth.grafo.Aresta;
-import br.com.nemeth.grafo.Grafo;
+import br.com.nemeth.impl.GrafoMatriz;
 
 public class Dijkstra {
 
@@ -25,7 +22,7 @@ public class Dijkstra {
 	// Definir o vértice aberto com a menor distância (não infinita) como o vértice
 	// atual
 
-	public static void execute(Grafo grafo, int inicial) {
+	public static void execute(GrafoMatriz grafo, int inicial) {
 
 		int qtd = grafo.vertices.size();
 		List<Boolean> aberto = new Vector<Boolean>();
@@ -39,60 +36,53 @@ public class Dijkstra {
 		}
 		// definir a distancia atual como zero
 		distancia.set(inicial, 0.0);
-		int numAbertos = 0;
 		// enquanto exisitr algum vertice aberto
+		int contador = 0;
+		int i = inicial;
 		do {
-			int i = numAbertos;
-			// ignorar o inicial
-			System.out.println(i = inicial);
-			if (i == inicial) {
-
-				int menorDistancia = -1;
-				// para cada vizinho do vertice
-				for (int j = 0; j < qtd; j++) {
-					// se a distancia do vizinho é maior que...
-					if (aberto.get(j) && (menorDistancia == -1 || distancia.get(j) < distancia.get(menorDistancia))) {
-						menorDistancia = i;
-					}
-
-				}
-				System.out.println(menorDistancia);
-				aberto.set(menorDistancia, false);
-
-				for (Integer vizinho : grafo.retornarVizinhos(i)) {
-					// ** Possivel erro na proxima linha
-					if (vizinho != 0 && aberto.get(vizinho) && distancia.get(vizinho) != Double.MAX_VALUE) {
-						double novaDistancia = distancia.get(menorDistancia) + vizinho;
-						if (novaDistancia < distancia.get(vizinho)) {
-							distancia.set(vizinho, novaDistancia);
-						}
-					}
+			double dist = Double.MAX_VALUE;
+			int menorVizinho = 0;
+			for (Integer vizinho : grafo.retornarVizinhos(i)) {
+				double v =(double) grafo.getArestas().get(i).get(vizinho);
+				anterior.set(vizinho, grafo.getVertices().get(i));
+				distancia.set(vizinho, v );
+				if (vizinho < dist && aberto.get(vizinho)) {
+					dist = vizinho;
+					menorVizinho = vizinho;
 				}
 			}
-		imprimir(qtd, aberto, anterior, distancia);
-		} while (numAbertos >= qtd);
+			i = grafo.getVertices().indexOf(grafo.getVertices().get(menorVizinho));
+			contador++;
+			aberto.set(i, false);
+			 imprimir(qtd, aberto, anterior, distancia);
+			 System.out.println("\n");
+		}while (contador < qtd);
 
-		for (int i = 1; i < qtd; i++) {
-			System.out.println(i + " " + distancia.get(i));
+		System.out.println("\n\nResultado:\n");
+		for (int loop = 1; loop < qtd; loop++) {
+			System.out.println(loop + " " + distancia.get(loop));
 		}
 
 	}
 
 	private static void imprimir(int qtd, List<Boolean> aberto, List<String> anterior, List<Double> distancia) {
 		System.out.println("*\t");
-			for (Double d: distancia) {
-				System.out.print(d+"\t");
-			}
-			System.out.println("\n");
-			for (String s: anterior) {
-				System.out.print(s+"\t");
-			}
+		for (Double d : distancia) {
+			System.out.print(d + "\t");
+		}
+		System.out.println("\n");
+		for (String s : anterior) {
+			System.out.print(s + "\t");
+		}
 
-			System.out.println("\n");
-			for (Boolean b: aberto) {
-				System.out.print(b+"\t");
-			}
+		System.out.println("\n");
+		for (Boolean b : aberto) {
+			System.out.print(b + "\t");
+		}
 
-System.out.println("");
+		System.out.println("");
 	}
+	
+	
+	
 }

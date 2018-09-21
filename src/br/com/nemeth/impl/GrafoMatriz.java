@@ -108,7 +108,6 @@ public class GrafoMatriz extends Grafo {
 		// retorna verdadeiro caso exista uma aresta entre os vertices passados por
 		// parametro
 
-		System.out.println( (arestas.get(origem).get(destino) != 0));
 		return (arestas.get(origem).get(destino) != 0);
 
 	}
@@ -158,6 +157,14 @@ public class GrafoMatriz extends Grafo {
 		}
 		
 		return false;
+	}
+
+	public List<List<Integer>> getArestas() {
+		return arestas;
+	}
+
+	public void setArestas(List<List<Integer>> arestas) {
+		this.arestas = arestas;
 	}
 
 }
