@@ -42,21 +42,23 @@ public class Dijkstra {
 		do {
 			double dist = Double.MAX_VALUE;
 			int menorVizinho = 0;
+			System.out.println(i + " - vizinhos " + grafo.retornarVizinhos(i).size());
 			for (Integer vizinho : grafo.retornarVizinhos(i)) {
-				double v =(double) grafo.getArestas().get(i).get(vizinho);
+				double v = (double) grafo.getArestas().get(i).get(vizinho);
 				anterior.set(vizinho, grafo.getVertices().get(i));
-				distancia.set(vizinho, v );
-				if (vizinho < dist && aberto.get(vizinho)) {
+				distancia.set(vizinho, v);
+				if (vizinho < dist + distancia.get(vizinho) && aberto.get(vizinho)) {
 					dist = vizinho;
 					menorVizinho = vizinho;
 				}
 			}
-			i = grafo.getVertices().indexOf(grafo.getVertices().get(menorVizinho));
-			contador++;
 			aberto.set(i, false);
-			 imprimir(qtd, aberto, anterior, distancia);
-			 System.out.println("\n");
-		}while (contador < qtd);
+			i = menorVizinho;
+			contador++;
+
+			imprimir(qtd, aberto, anterior, distancia);
+			System.out.println("\n");
+		} while (contador < qtd);
 
 		System.out.println("\n\nResultado:\n");
 		for (int loop = 1; loop < qtd; loop++) {
@@ -82,7 +84,5 @@ public class Dijkstra {
 
 		System.out.println("");
 	}
-	
-	
-	
+
 }
