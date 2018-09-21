@@ -12,7 +12,7 @@ public class ProjetoGrafos {
 	public static void main(String[] args) {
 		Grafo grafo = null;
 		try {
-			grafo = new GrafoMatriz(new File("Dijkstra1.txt").getAbsolutePath());
+			grafo = new GrafoMatriz(new File("Dijkstra2.txt").getAbsolutePath());
 		} catch (NullPointerException e) {
 			System.out.println("Null");
 		}

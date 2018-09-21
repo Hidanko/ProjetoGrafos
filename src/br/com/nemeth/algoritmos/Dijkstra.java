@@ -3,6 +3,8 @@ package br.com.nemeth.algoritmos;
 import java.util.List;
 import java.util.Vector;
 
+import javax.sound.midi.Soundbank;
+
 import br.com.nemeth.grafo.Aresta;
 import br.com.nemeth.grafo.Grafo;
 
@@ -39,10 +41,11 @@ public class Dijkstra {
 		distancia.set(inicial, 0.0);
 		int numAbertos = 0;
 		// enquanto exisitr algum vertice aberto
-		while (numAbertos >= qtd) {
+		do {
 			int i = numAbertos;
 			// ignorar o inicial
-			if (i != inicial) {
+			System.out.println(i = inicial);
+			if (i == inicial) {
 
 				int menorDistancia = -1;
 				// para cada vizinho do vertice
@@ -55,23 +58,41 @@ public class Dijkstra {
 				}
 				System.out.println(menorDistancia);
 				aberto.set(menorDistancia, false);
-				numAbertos++;
+
 				for (Integer vizinho : grafo.retornarVizinhos(i)) {
 					// ** Possivel erro na proxima linha
-					if (vizinho != 0 && aberto.get(i) && distancia.get(i) != Double.MAX_VALUE) {
+					if (vizinho != 0 && aberto.get(vizinho) && distancia.get(vizinho) != Double.MAX_VALUE) {
 						double novaDistancia = distancia.get(menorDistancia) + vizinho;
-						if (novaDistancia < distancia.get(i)) {
-							distancia.set(i, novaDistancia);
+						if (novaDistancia < distancia.get(vizinho)) {
+							distancia.set(vizinho, novaDistancia);
 						}
 					}
 				}
 			}
-
-		}
+		imprimir(qtd, aberto, anterior, distancia);
+		} while (numAbertos >= qtd);
 
 		for (int i = 1; i < qtd; i++) {
 			System.out.println(i + " " + distancia.get(i));
 		}
 
+	}
+
+	private static void imprimir(int qtd, List<Boolean> aberto, List<String> anterior, List<Double> distancia) {
+		System.out.println("*\t");
+			for (Double d: distancia) {
+				System.out.print(d+"\t");
+			}
+			System.out.println("\n");
+			for (String s: anterior) {
+				System.out.print(s+"\t");
+			}
+
+			System.out.println("\n");
+			for (Boolean b: aberto) {
+				System.out.print(b+"\t");
+			}
+
+System.out.println("");
 	}
 }
