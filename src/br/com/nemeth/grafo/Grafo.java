@@ -2,11 +2,17 @@ package br.com.nemeth.grafo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import static java.util.Collections.reverseOrder;
+
 
 public abstract class Grafo {
 	protected Integer numVertices;
@@ -59,41 +65,101 @@ public abstract class Grafo {
 	public abstract List<Integer> retornarVizinhos(Integer vertice);
 
 	public abstract boolean preencherVertices(int nVertices);
+
 	public abstract void imprimeGrafo();
 
-	void carregarGrafo(String nomeArquivo) throws IOException {
-	      File arquivo = new File(nomeArquivo);
-	        Scanner scanner = new Scanner(arquivo);
-	        
-	        Integer nVertices = scanner.nextInt();
-	        Integer nArestas = scanner.nextInt();                
-	        
-	        Integer isDir = scanner.nextInt();
-	        Integer isPond = scanner.nextInt();
-	        
-	        this.isDirecionado = isDir == 1;
-	        this.isPonderado = isPond == 1;
-	        preencherVertices(nVertices);
+	public abstract int retornaGrau(int indice);
 
-	        for (int i = 0; i < nVertices; i++) {
-	            if(scanner.hasNext()) {
-	                String linha = scanner.next();
-	                this.inserirVertice(linha);
-	            }
-	        }
-	        System.out.println("nVertices:"+nVertices);
-	        System.out.println("nArestas: "+nArestas);
-	        for (int i = 0; i < nArestas; i++) {
-	            Integer origem = scanner.nextInt();
-	            Integer destino = scanner.nextInt();
-	            if(isPond == 1) {
-	                Integer peso = scanner.nextInt();
-	                this.inserirAresta(origem, destino, peso);
-	            } else {
-	                this.inserirAresta(origem, destino);
-	            }
-	        }
-	        scanner.close();
+	public List<Integer> coloracaoWP() {
+		HashMap<Integer, Integer> grauVertices = new HashMap<Integer, Integer>();
+
+		for (int i = 0; i < numVertices; i++) {
+			grauVertices.put(i, retornaGrau(i));
+
+		}
+		List<Map.Entry<Integer, Integer>> sorted_map =
+                grauVertices.entrySet()
+                .stream()
+                .sorted(reverseOrder(Map.Entry.comparingByValue()))
+                .collect(Collectors.toList());
+		
+		System.out.println();
+		
+		grauVertices.entrySet().stream()
+		   .sorted(Map.Entry.comparingByValue())
+		   .forEach(System.out::println);
+		
+		int corAtual = 0;
+		List<Integer> corVertice = new Vector<Integer>();
+		
+		for (int i = 0; i < grauVertices.size(); i++) {
+			corVertice.add(-1);
+		}
+		int contador = grauVertices.size();
+		while (contador > 0) {
+			for (int j = 0; j < corVertice.size(); j++) {
+				if (corVertice.get(grauVertices.get(j)) == -1) {
+					List<Integer> vizinhos = retornarVizinhos(grauVertices.get(j));
+					boolean pode = true;
+					
+					for (int k =0; k < vizinhos.size(); k++) {
+						if(corVertice.get(vizinhos.get(k)) == corAtual) {
+							pode = false;
+							break;
+						}
+					}
+					if (pode) {
+						corVertice.set(grauVertices.get(j), corAtual);
+					}
+				}
+			
+			}
+			corAtual++;
+		}
+		
+		
+		System.out.println("Tamnho da resposta: "+corVertice.size());
+		
+		return corVertice;
+	}
+
+	public boolean comparar(Map<Integer, Integer> primeiro, Map<Integer, Integer> segundo) {
+		return primeiro.get(2) > segundo.get(2);
+	}
+
+	void carregarGrafo(String nomeArquivo) throws IOException {
+		File arquivo = new File(nomeArquivo);
+		Scanner scanner = new Scanner(arquivo);
+
+		Integer nVertices = scanner.nextInt();
+		Integer nArestas = scanner.nextInt();
+
+		Integer isDir = scanner.nextInt();
+		Integer isPond = scanner.nextInt();
+
+		this.isDirecionado = isDir == 1;
+		this.isPonderado = isPond == 1;
+		preencherVertices(nVertices);
+
+		for (int i = 0; i < nVertices; i++) {
+			if (scanner.hasNext()) {
+				String linha = scanner.next();
+				this.inserirVertice(linha);
+			}
+		}
+		System.out.println("nVertices:" + nVertices);
+		System.out.println("nArestas: " + nArestas);
+		for (int i = 0; i < nArestas; i++) {
+			Integer origem = scanner.nextInt();
+			Integer destino = scanner.nextInt();
+			if (isPond == 1) {
+				Integer peso = scanner.nextInt();
+				this.inserirAresta(origem, destino, peso);
+			} else {
+				this.inserirAresta(origem, destino);
+			}
+		}
+		scanner.close();
 	}
 
 	List<Integer> buscaProfundidade(int verticeInicial, int verticeFinal) {
@@ -170,6 +236,5 @@ public abstract class Grafo {
 	public void setVertices(List<String> vertices) {
 		this.vertices = vertices;
 	}
-	
-	
+
 }

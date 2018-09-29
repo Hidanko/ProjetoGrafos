@@ -44,11 +44,16 @@ public class Dijkstra {
 			int menorVizinho = 0;
 			System.out.println(i + " - vizinhos " + grafo.retornarVizinhos(i).size());
 			for (Integer vizinho : grafo.retornarVizinhos(i)) {
+				if (i == inicial) {
 				double v = (double) grafo.getArestas().get(i).get(vizinho);
 				anterior.set(vizinho, grafo.getVertices().get(i));
 				distancia.set(vizinho, v);
-				if (vizinho < dist + distancia.get(vizinho) && aberto.get(vizinho)) {
-					dist = vizinho;
+				}
+				if (vizinho < dist + distancia.get(vizinho) && aberto.get(i)) {
+					double v = (double) grafo.getArestas().get(i).get(vizinho);
+					anterior.set(vizinho, grafo.getVertices().get(i));
+					distancia.set(vizinho, v);
+					dist += vizinho;
 					menorVizinho = vizinho;
 				}
 			}
@@ -61,6 +66,10 @@ public class Dijkstra {
 		} while (contador < qtd);
 
 		System.out.println("\n\nResultado:\n");
+//		distancia.set(1, 3.0);
+//		distancia.set(2, 5.0);
+//		distancia.set(3, 6.0);
+//		distancia.set(4, 8.0);
 		for (int loop = 1; loop < qtd; loop++) {
 			System.out.println(loop + " " + distancia.get(loop));
 		}

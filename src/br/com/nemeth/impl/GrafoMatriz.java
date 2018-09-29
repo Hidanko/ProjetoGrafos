@@ -9,10 +9,9 @@ import br.com.nemeth.grafo.Grafo;
 public class GrafoMatriz extends Grafo {
 
 	public List<List<Integer>> arestas;
-	
+
 	public GrafoMatriz(boolean isDir, boolean isPond) {
 		super(isDir, isPond);
-
 
 	}
 
@@ -117,7 +116,7 @@ public class GrafoMatriz extends Grafo {
 		List<Integer> vizinhos = new Vector<Integer>();
 
 		for (int i = 0; i < numVertices; i++) {
-			if(existeAresta(vertice, i)) {
+			if (existeAresta(vertice, i)) {
 				vizinhos.add(i);
 			}
 		}
@@ -147,7 +146,7 @@ public class GrafoMatriz extends Grafo {
 	@Override
 	public boolean preencherVertices(int nVertices) {
 		arestas = new ArrayList<List<Integer>>();
-		
+
 		for (int i = 0; i < nVertices; i++) {
 			List<Integer> lista = new Vector<Integer>();
 			for (int j = 0; j < nVertices; j++) {
@@ -155,7 +154,7 @@ public class GrafoMatriz extends Grafo {
 			}
 			arestas.add(lista);
 		}
-		
+
 		return false;
 	}
 
@@ -165,6 +164,17 @@ public class GrafoMatriz extends Grafo {
 
 	public void setArestas(List<List<Integer>> arestas) {
 		this.arestas = arestas;
+	}
+
+	@Override
+	public int retornaGrau(int indice) {
+		int num = 0;
+		for (int i = 0; i < numVertices; i++) {
+			if (existeAresta(indice, i)) {
+				num++;
+			}
+		}
+		return num;
 	}
 
 }

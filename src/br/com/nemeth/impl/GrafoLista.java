@@ -14,8 +14,8 @@ public class GrafoLista extends Grafo {
 
 		super(isDir, isPond);
 		vertices = new Vector<String>();
-		numVertices=0;
-		numArestas=0;
+		numVertices = 0;
+		numArestas = 0;
 	}
 
 	public GrafoLista(String nomeArquivo) {
@@ -64,7 +64,6 @@ public class GrafoLista extends Grafo {
 	public boolean inserirAresta(Integer origem, Integer destino, Integer peso) {
 
 		Aresta novaAresta = new Aresta(destino, peso);
-
 
 		arestas.get(origem).add(novaAresta);
 
@@ -124,11 +123,11 @@ public class GrafoLista extends Grafo {
 	@Override
 	public void imprimeGrafo() {
 		// exibe a estrutura do grafo no console
-		System.out.println("NUmero vertices - imprimeGrafo: "+numVertices);
+		System.out.println("NUmero vertices - imprimeGrafo: " + numVertices);
 		for (int i = 0; i < vertices.size(); i++) {
 			System.out.print(vertices.get(i) + " ->\t");
 
-			for (int j = 0; j < arestas.get(i).size()-1; j++) {
+			for (int j = 0; j < arestas.get(i).size() - 1; j++) {
 				System.out.print(labelVertice(arestas.get(i).get(j).destino) + ", ");
 			}
 			System.out.println("");
@@ -137,11 +136,17 @@ public class GrafoLista extends Grafo {
 
 	@Override
 	public boolean preencherVertices(int nVertices) {
-		arestas  = new ArrayList<List<Aresta>>();
-		
-		for (int i = 0; i <nVertices; i++) {
+		arestas = new ArrayList<List<Aresta>>();
+
+		for (int i = 0; i < nVertices; i++) {
 			arestas.add(new Vector<Aresta>());
 		}
 		return false;
+	}
+
+	@Override
+	public int retornaGrau(int indice) {
+		return arestas.get(indice).size();
+
 	}
 }
